@@ -21,8 +21,10 @@ store.dispatch(increment());
 store.dispatch(incrementByAmount(3));
 store.dispatch(incrementByAmount(1));
 
-store.dispatch(addTodo({id: 2, text: 'write document', completed: false}));
-store.dispatch(updateTodo({id: 2, text: 'write document', completed: true}));
+store.dispatch(addTodo({text: 'write document', completed: false}));
+store.dispatch(addTodo({text: 'one attribute todo'}));
+store.dispatch(addTodo({}));
+store.dispatch(updateTodo({id: 1, text: 'this been changed to true', completed: true}));
 store.dispatch(addTodo({id: 3, text: 'write document 2', completed: false}));
 store.dispatch(removeTodo({id: 3}));
 

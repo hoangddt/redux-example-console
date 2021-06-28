@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 export const slice = createSlice({
 	name: 'todos',
@@ -10,13 +10,29 @@ export const slice = createSlice({
 		}
 	],
 	reducers: {
-		addTodo: (state, action) => {
-			// console.log("/addTodo/ action: ", action);
-			return [...state, action.payload];
+		addTodo: {
+			reducer(state, action) {
+				// check if id is duplicated here
+				return [...state, action.payload];
+			},
+			// https://redux.js.org/tutorials/essentials/part-4-using-data#preparing-action-payloads
+			prepare({id, text, completed}) {
+				id = (typeof id !== 'undefined') ? id : nanoid();
+				completed = (typeof completed !== 'undefined') ? completed : false;
+				return {
+					payload: {
+						id: id,
+						text,
+						completed
+					}
+				}
+			}
 		},
 		updateTodo: (state, action) => {
 			let index = state.findIndex(todo => todo.id === action.payload.id);
-			state[index] = {...state[index], ...action.payload};
+			if (index > -1) {
+				state[index] = {...state[index], ...action.payload};
+			};
 			return state;
 		},
 		removeTodo: (state, action) => {
