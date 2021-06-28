@@ -16,7 +16,7 @@ export const slice = createSlice({
 		},
 		updateTodo: (state, action) => {
 			let index = state.findIndex(todo => todo.id === action.payload.id);
-			state[index] = action.payload;
+			state[index] = {...state[index], ...action.payload};
 			return state;
 		},
 		removeTodo: (state, action) => {
